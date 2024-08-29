@@ -5,6 +5,7 @@ import HomeSection from "../HomeSection/HomeSection";
 import RightPart from "../RightPart/RightPart";
 import { Route, Routes } from "react-router-dom";
 import Profile from "../Profile/Profile";
+import TweetDetails from "../TweetDetails/TweetDetails";
 
 const HomePage = () => {
   return (
@@ -22,7 +23,9 @@ const HomePage = () => {
         <p className="text-center">
             <Routes>
                 <Route path="/" element={<HomeSection />}></Route>
+                <Route path="/home" element={<HomeSection />}></Route>
                 <Route path="/profile/:id" element={<Profile />}></Route>
+                <Route path="/tweet/:id" element={<TweetDetails />}></Route>
                 
             </Routes>
         </p>

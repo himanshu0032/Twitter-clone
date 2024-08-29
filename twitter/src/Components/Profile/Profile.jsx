@@ -7,13 +7,18 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import TweetCard from "../HomePage/TweetCard";
+import ProfileModal from "./ProfileModal";
 
 const Profile = () => {
+    const [openProfileModal, setOpenProfileModal] = useState(false)
+    const handleOpenProfileModel = () => setOpenProfileModal(true);
+  const handleClose = () => setOpenProfileModal(false);
+
+ 
+
   const navigate = useNavigate();
   const handleBack = () => navigate(-1);
-  const handleOpenProfileModel = () => {
-    console.log("handleOpenProfileModel");
-  };
+
   const handleFollowUser = () => {
     console.log("follow issue");
   };
@@ -29,7 +34,7 @@ const Profile = () => {
   }
   return (
     <div>
-      <section className={"z-50 flex items-center sticky top-0 bg-opacity-95"}>
+      <section className={"bg-white z-50 flex items-center sticky top-0 bg-opacity-95"}>
         <KeyboardBackspaceIcon
           className="cursor-pointer"
           onClick={handleBack}
@@ -147,6 +152,10 @@ const Profile = () => {
             <TabPanel value="4">Likes</TabPanel>
           </TabContext>
         </Box>
+      </section>
+
+      <section>
+        <ProfileModal handleClose={handleClose} open={openProfileModal}/>
       </section>
     </div>
   );

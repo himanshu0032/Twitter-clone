@@ -50,7 +50,7 @@ export const navigationMenu = [
         path: "/profile"
     },
     {
-        title: 'Home',
+        title: 'More',
         icon: <PendingIcon/>,
         path: "/more"
     }

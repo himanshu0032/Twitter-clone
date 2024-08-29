@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import RepeatIcon from "@mui/icons-material/Repeat";
 import { useNavigate } from "react-router-dom";
 import { Avatar, Button, Menu, MenuItem } from "@mui/material";
@@ -8,9 +8,13 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import ReplyModal from "../HomeSection/ReplyModal";
 
 const TweetCard = () => {
   const navigate = useNavigate();
+  const [openReplyModal, setOpenReplyModal] = useState(false)
+  const handleOpenReplyModel = () => setOpenReplyModal(true);
+const handleCloseReplyModal = () => setOpenReplyModal(false);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -26,9 +30,6 @@ const TweetCard = () => {
     handleClose();
   };
 
-  const handleOpenReplyModel = () => {
-    console.log("open modal");
-  };
 
   const handleCreateRetweet = () => {
     console.log("handle create retweet");
@@ -39,7 +40,7 @@ const TweetCard = () => {
   };
 
   return (
-    <div className="">
+    <>
       {/* <div className='flex  items-center font-semibold text-gray-700 py-2'>
          <RepeatIcon />
          <p>You Retweet</p>
@@ -86,7 +87,7 @@ const TweetCard = () => {
             </Menu>
           </div>
           <div className="mt-2">
-            <div className="cursor-pointer">
+            <div onClick={()=> navigate(`/tweet/${3}`)} className="cursor-pointer">
               <p className="mb-2  text-left">
                 Himanshu want to teach on youtube about Full Stack Dev
               </p>
@@ -140,8 +141,12 @@ const TweetCard = () => {
           </div>
         </div>
       </div>
-    </div>
+      <section>
+        <ReplyModal open={openReplyModal} handleClose={handleCloseReplyModal}/>
+      </section>
+    </>
   );
 };
 
 export default TweetCard;
+ 
