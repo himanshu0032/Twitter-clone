@@ -10,7 +10,7 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ReplyModal from "../HomeSection/ReplyModal";
 
-const TweetCard = () => {
+const TweetCard = ({item}) => {
   const navigate = useNavigate();
   const [openReplyModal, setOpenReplyModal] = useState(false)
   const handleOpenReplyModel = () => setOpenReplyModal(true);
@@ -89,11 +89,11 @@ const handleCloseReplyModal = () => setOpenReplyModal(false);
           <div className="mt-2">
             <div onClick={()=> navigate(`/tweet/${3}`)} className="cursor-pointer">
               <p className="mb-2  text-left">
-                Himanshu want to teach on youtube about Full Stack Dev
+                {item.content}
               </p>
               <img
                 className="w-[28rem] border border-gray-400 p-5 rounded-md"
-                src="https://lh3.googleusercontent.com/X8LuYsGddUvyGns8yNt3lsqXU-etopUi9saFCQ-VMIImDW0plr-ZvBRjhnKh4V2r6UEMaBMXUBkJSD_RrHbWdmIp2RUnVJgcbiJ_S3l_kOAseWWI6JiLccLcL0cRFpnba-n4bjlOW3FvHbHdMs_ToZE"
+                src={item.image}
                 alt=""
               />
             </div>

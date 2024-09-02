@@ -4,9 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { blue } from "@mui/material/colors";
 import { Avatar, Button, Menu, MenuItem } from "@mui/material";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../Store/Auth/Action";
 
 const Navigtaion = () => {
     const navigate = useNavigate();
+    const {auth} = useSelector(store=>store);
+    const dispatch = useDispatch();
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -20,6 +24,7 @@ const Navigtaion = () => {
     const handleLogout = ()=>{
       console.log("logout")
       handleClose()
+      dispatch(logout())
     }
 
   return (
@@ -59,8 +64,8 @@ const Navigtaion = () => {
         <div className="flex items-center space-x-3">
          <Avatar alt="username" src="https://lh3.googleusercontent.com/X8LuYsGddUvyGns8yNt3lsqXU-etopUi9saFCQ-VMIImDW0plr-ZvBRjhnKh4V2r6UEMaBMXUBkJSD_RrHbWdmIp2RUnVJgcbiJ_S3l_kOAseWWI6JiLccLcL0cRFpnba-n4bjlOW3FvHbHdMs_ToZE"/>
           <div>
-            <span>Himanshu</span>
-            <span className='opacity-80'>@code with fun</span>
+            <p>{auth.user?.fullName}</p>
+            <span className='opacity-80'>@{auth.user?.fullName.split(" ").join("_").toLowerCase()}</span>
           </div>
           
           <Button
