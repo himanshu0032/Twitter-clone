@@ -26,6 +26,7 @@ export const authReducer = (state = initialState, action) =>{
         return {...state, loading:false, error:null, findUser:action.payload}
     
     case FOLLOW_USER_SUCCESS:
+      //  console.log("Payload received in reducer: ", action.payload);
         return {...state, loading:false, error:null, findUser:action.payload}
     case LOGOUT:
         return initialState     

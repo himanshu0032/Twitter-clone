@@ -7,6 +7,9 @@ import { useFormik } from "formik";
 import CloseIcon from "@mui/icons-material/Close";
 import { Avatar, IconButton, TextField } from "@mui/material";
 import './ProfileModal.css'
+import { useDispatch, useSelector } from "react-redux";
+import { updateUserProfile } from "../../Store/Auth/Action";
+import { uploadToCloudnary } from "../../Utils/uploadToCloudnary";
 
 const style = {
   position: "absolute",
@@ -24,9 +27,16 @@ const style = {
 
 export default function ProfileModal({open,handleClose}) {
   //const [open, setOpen] = React.useState(false);
+  const [uploading, setuploading] = React.useState(false);
+  const dispatch = useDispatch();
+  const [selectedImage, setSelectedImage] = React.useState("")
+  const {auth} = useSelector(store=> store);
+
   
   const handleSubmit = (values) => {
+    dispatch(updateUserProfile(values))
     console.log("handle submit",values);
+    selectedImage("")
   };
   const formik = useFormik({
     initialValues: {
@@ -39,14 +49,17 @@ export default function ProfileModal({open,handleClose}) {
     },
     onSubmit: handleSubmit,
   });
-  const [uploading, setuploading] = React.useState(false);
-  const handleImageChange = (event) => {
+ 
+  const handleImageChange = async (event) => {
     setuploading(true);
     const { name } = event.target;
-    const file = event.target.files[0];
+    const file = await uploadToCloudnary(event.target.files[0])
     formik.setFieldValue(name, file);
+    setSelectedImage(file)
     setuploading(false);
   };
+
+  console.log("auth ",auth)
 
   return (
     <div>
@@ -92,7 +105,9 @@ export default function ProfileModal({open,handleClose}) {
                         "10rem",
                         border:"4px white solid"
                       }}
-                      src="https://lh3.googleusercontent.com/X8LuYsGddUvyGns8yNt3lsqXU-etopUi9saFCQ-VMIImDW0plr-ZvBRjhnKh4V2r6UEMaBMXUBkJSD_RrHbWdmIp2RUnVJgcbiJ_S3l_kOAseWWI6JiLccLcL0cRFpnba-n4bjlOW3FvHbHdMs_ToZE"/>
+                      src={selectedImage|| auth.user?.image || "https://lh3.googleusercontent.com/X8LuYsGddUvyGns8yNt3lsqXU-etopUi9saFCQ-VMIImDW0plr-ZvBRjhnKh4V2r6UEMaBMXUBkJSD_RrHbWdmIp2RUnVJgcbiJ_S3l_kOAseWWI6JiLccLcL0cRFpnba-n4bjlOW3FvHbHdMs_ToZE"}
+                      />
+                      {/* "https://lh3.googleusercontent.com/X8LuYsGddUvyGns8yNt3lsqXU-etopUi9saFCQ-VMIImDW0plr-ZvBRjhnKh4V2r6UEMaBMXUBkJSD_RrHbWdmIp2RUnVJgcbiJ_S3l_kOAseWWI6JiLccLcL0cRFpnba-n4bjlOW3FvHbHdMs_ToZE" */}
                       
                       <input 
                       type="file"

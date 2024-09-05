@@ -8,18 +8,24 @@ import TagFacesIcon from "@mui/icons-material/TagFaces";
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import TweetCard from '../HomePage/TweetCard.jsx'
 import { useDispatch, useSelector } from "react-redux";
-import { getAllTweets } from "../../Store/Tweet/Action.js";
+import { createTweet, getAllTweets } from "../../Store/Tweet/Action.js";
+import { uploadToCloudnary } from "../../Utils/uploadToCloudnary.js";
 
 const HomeSection = () => {
-  const handleSubmit = (values) => {
-    console.log("values", values);
-  };
   const dispatch = useDispatch();
   const {tweet} = useSelector(store=> store)
-  console.log("tweet",tweet)
+  console.log("tweet:",tweet)
+
+  const handleSubmit = (values, actions) => {
+    dispatch(createTweet(values))
+    actions.resetForm()
+    console.log("values", values);
+    setSelectedImage("")
+  };
+  
   useEffect(()=>{
     dispatch(getAllTweets())
-  },[])
+  },[tweet.like,tweet.retweet])
   
   const validationSchema = Yup.object().shape({
     content: Yup.string().required("Tweet text is required"),
@@ -36,9 +42,10 @@ const HomeSection = () => {
     validationSchema,
   });
 
-  const handleSelectImage = (event) => {
+  const handleSelectImage = async (event) => {
     setuploadingImage(true);
-    const imgUrl = event.target.files[0];
+    // const imgUrl = event.target.files[0];
+    const imgUrl = await uploadToCloudnary(event.target.files[0])
     formik.setFieldValue("image", imgUrl);
     setSelectedImage(imgUrl);
     setuploadingImage(false);
@@ -107,6 +114,10 @@ const HomeSection = () => {
                 </div>
               </div>
             </form>
+
+            <div>
+             { selectImage && <img src={selectImage} alt="" />}
+            </div>
           </div>
         </div>
       </section>

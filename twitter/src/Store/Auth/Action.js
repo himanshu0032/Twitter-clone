@@ -50,6 +50,7 @@ export const getUserProfile= (jwt) => async(dispatch) =>{
 export const findUserById= (userId) => async(dispatch) =>{
     try {
         const {data} = await api.get(`api/users/${userId}`)
+        console.log("find user by id",data)
         dispatch({type:FIND_USER_BY_ID_SUCCESS,payload:data})
     } catch (error) {
         console.log("error",error)
@@ -59,7 +60,7 @@ export const findUserById= (userId) => async(dispatch) =>{
 
 export const updateUserProfile= (reqData) => async(dispatch) =>{
     try {
-        const {data} = await api.put(`api/users/update/`,reqData)
+        const {data} = await api.put(`api/users/update`,reqData)
         console.log("updated user",data)
         dispatch({type:UPDATE_USER_SUCCESS,payload:data})
     } catch (error) {
